@@ -16,7 +16,7 @@
 		<div class="level">
 			<button class="btn btn-sm btn-outline-primary" @click="update">Update</button>
 			<button class="btn btn-sm btn-outline-info ml-2" @click="resetForm">Cancel</button>
-			<form method="post" class="ml-auto" action="{{ route( 'threads.destroy', [ $thread->channel->slug, $thread->id ] ) }}" >
+			<form method="post" class="ml-auto" action="{{ route( 'threads.destroy', [ $thread->channel, $thread ] ) }}" >
 				@csrf
 				@method('DELETE')
 
@@ -36,6 +36,7 @@
 			<span class="flex">
 				<a href="{{ route( 'profile', $thread->creator ) }}" >
 					{{ $thread->creator->name }}
+					({{ $thread->creator->reputation }} XP)
 				</a >
 
 				posted: <span v-text="title"></span>

@@ -3,7 +3,12 @@
 		<div class="level">
 			<img :src="avatar" width="50" height="50" alt="profile image" class="mr-2">
 
-			<h1 v-text="user.name"></h1>
+			<h1>
+				{{ user.name }}
+				<small>
+					{{ reputation }}
+				</small>
+			</h1>
 		</div>
 
 		<form v-if="canUpdate">
@@ -32,7 +37,11 @@
 		    canUpdate: function()
 		    {
 		        return this.authorize( user => user.id === this.user.id );
-		    }
+		    },
+			reputation()
+			{
+			    return this.user.reputation + "XP";
+			}
 		},
 		methods:
 		{
