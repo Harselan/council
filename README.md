@@ -36,7 +36,7 @@ reCAPTCHA is a Google tool to help prevent forum spam. You'll need to create a f
 
 Choose reCAPTCHA v3, and specify your local (and eventually production) domain name, as illustrated in the image below.
 
-![recaptcha example](https://github.com/Harselan/council/tree/master/resources/images/recaptcha-screen-shot.png)
+![recaptcha example](https://github.com/Harselan/council/blob/master/resources/images/recaptcha-screen-shot.png?raw=true)
 
 Once submitted, you'll see two important keys that should be referenced in your `.env` file. 
 
