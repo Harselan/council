@@ -20,9 +20,10 @@ Route::view( 'scan', 'scan' );
 
 
 
-Route::resource( 'threads', 'ThreadController', [ 'except' => [ 'show', 'store', 'destroy', 'update' ] ] );
+Route::resource( 'threads', 'ThreadController', [ 'except' => [ 'show', 'store', 'destroy', 'update', 'create' ] ] );
 Route::post( 'threads', 'ThreadController@store' )->middleware('must-be-confirmed')->name('threads.store');
 
+Route::get( 'threads/create', 'ThreadController@create' )->middleware('must-be-confirmed')->name('threads.create');
 Route::get( 'threads/search', 'SearchController@show' )->name('threads.search');
 
 Route::get( 'threads/{channel}', 'ThreadController@index' )->name('channels.show');
