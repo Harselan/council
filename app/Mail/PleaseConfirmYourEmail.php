@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
@@ -13,7 +14,7 @@ class PleaseConfirmYourEmail extends Mailable implements ShouldQueue
 
     public $user;
 
-	public function __construct( $user )
+	public function __construct( User $user )
 	{
 		$this->user = $user;
 	}

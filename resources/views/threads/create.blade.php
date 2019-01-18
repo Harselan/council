@@ -1,16 +1,17 @@
 @extends('layouts.app')
 
 @section('head')
-	<script src='https://www.google.com/recaptcha/api.js?render={{ config( 'services.recaptcha.public' ) }}'></script>
+	<script src='https://www.google.com/recaptcha/api.js?render={{ config( 'council.recaptcha.key' ) }}'></script>
 	<script >
-        var recaptchaKey = '{{ config( 'services.recaptcha.public' ) }}';
+        var recaptchaKey = '{{ config( 'council.recaptcha.key' ) }}';
         $(document).ready( function()
         {
+            var form = $( '#recaptcha_form' );
+
             // when form is submit
-            $( 'form' ).submit( function()
+            form.submit( function()
             {
                 event.preventDefault();
-                var form = $('form');
 
                 grecaptcha.ready(function()
                 {

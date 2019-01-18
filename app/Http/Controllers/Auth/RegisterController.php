@@ -81,7 +81,7 @@ class RegisterController extends Controller
 	 *
 	 * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
 	 */
-	protected function registered( $user)
+	protected function registered( Request $request, $user )
 	{
 		Mail::to( $user )->send( new PleaseConfirmYourEmail( $user ) );
 
