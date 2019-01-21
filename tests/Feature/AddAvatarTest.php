@@ -34,6 +34,7 @@ class AddAvatarTest extends TestCase
 	/** @test */
 	function a_user_may_add_an_avatar_to_their_profile()
 	{
+		$this->withExceptionHandling();
 		$this->signIn();
 
 		Storage::fake('public');
