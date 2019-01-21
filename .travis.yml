@@ -1,22 +1,20 @@
 language: php
 
-php:
+ php:
   - 7.1
 
-before_script:
+ before_script:
   - cp .env.travis .env
   - composer self-update
   - composer install --no-interaction
-  - pear install pear/PHP_CodeSniffer
 
-script:
+ script:
   - php artisan key:generate
-  - phpcs --ignore=app/Http/Controllers/Auth,app/Http/Controllers/Controller.php app/Http/Controllers
   - vendor/bin/phpunit
 
-services:
+ services:
   - redis-server
 
-cache:
+ cache:
   directories:
-    - vendor
+    - vendor 
