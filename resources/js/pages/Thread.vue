@@ -11,7 +11,8 @@
 		{
 		    return {
 		        repliesCount: this.thread.replies_count,
-			    locked: this.thread.locked,
+                locked: this.thread.locked,
+                pinned: this.thread.pinned,
 			    editing: false,
 			    title: this.thread.title,
 			    body: this.thread.body,
@@ -32,6 +33,21 @@
 
                 this.locked = !this.locked;
             },
+			togglePin()
+			{
+			    var url = '/pinned-threads/' + this.thread.slug;
+
+                axios[ this.pinned ? 'delete' : 'post' ]( url );
+
+                this.pinned = !this.pinned;
+			},
+			classes( target )
+			{
+			    return [
+			        'btn',
+				    target ? 'btn-outline-danger' : 'btn-outline-primary'
+			    ];
+			},
 			update()
 			{
                 var url = '/threads/' + this.thread.channel.slug + '/' + this.thread.slug;

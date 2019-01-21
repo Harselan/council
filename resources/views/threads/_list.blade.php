@@ -5,6 +5,9 @@
 				<div class="flex">
 					<h5 class="text-sm">
 						<a href="{{ $thread->path() }}">
+							@if( $thread->pinned )
+								<i class="fa fa-map-pin"></i>
+							@endif
 							@if( Auth::check() && $thread->hasUpdatesFor( auth()->user() ) )
 								<strong>{{ $thread->title }}</strong>
 							@else

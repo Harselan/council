@@ -11,10 +11,10 @@ class Thread extends Model
 {
 	use RecordsActivity, SpamFilter, Searchable;
 
-	protected $fillable = [ 'title', 'body', 'user_id', 'channel_id', 'slug', 'best_reply_id', 'locked' ];
+	protected $fillable = [ 'title', 'body', 'user_id', 'channel_id', 'slug', 'best_reply_id', 'locked', 'pinned' ];
 	protected $with     = [ 'creator', 'channel' ];
 	protected $appends  = [ 'isSubscribedTo' ];
-	protected $casts    = [ 'locked' => 'boolean' ];
+	protected $casts    = [ 'locked' => 'boolean', 'pinned' => 'boolean' ];
 
 	protected static function boot()
 	{
