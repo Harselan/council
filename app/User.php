@@ -3,7 +3,6 @@
 namespace App;
 
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
@@ -31,6 +30,10 @@ class User extends Authenticatable
     protected $casts = [
     	'confirmed' => 'boolean'
     ];
+
+	protected $appends = [
+		'isAdmin'
+	];
 
 	public function getRouteKeyName()
 	{
@@ -62,7 +65,12 @@ class User extends Authenticatable
 
 	public function isAdmin()
 	{
-		return in_array( $this->name, [ 'JohnDoe', 'JaneDoe' ], true );
+		return in_array( $this->email, config('council.administrators') );
+	}
+
+	public function getIsAdminAttribute()
+	{
+		return $this->isAdmin();
 	}
 
 	public function visitedThreadCacheKey( $thread )

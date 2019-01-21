@@ -18,8 +18,6 @@ Route::get('/', function () {
 
 Route::view( 'scan', 'scan' );
 
-
-
 Route::resource( 'threads', 'ThreadController', [ 'except' => [ 'show', 'store', 'destroy', 'update', 'create' ] ] );
 Route::post( 'threads', 'ThreadController@store' )->middleware('must-be-confirmed')->name('threads.store');
 
@@ -58,3 +56,11 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get( 'api/users', 'Api\UserController@index' )->name('api.users');
 Route::post( 'api/users/{user}/avatar', 'Api\UserAvatarController@store' )->name('avatar');
+
+Route::group(array('prefix' => 'admin', 'middleware' => 'admin', 'namespace' => 'Admin'), function()
+{
+	Route::get( '/', 'DashboardController@index' )->name('admin.dashboard.index');
+	Route::post( '/channels', 'ChannelController@store' )->name('admin.channels.store');
+	Route::get( '/channels', 'ChannelController@index' )->name('admin.channels.index');
+	Route::get( '/channels/create', 'ChannelController@create')->name('admin.channels.create');
+});

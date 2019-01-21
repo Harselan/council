@@ -93834,7 +93834,7 @@ module.exports = {
     return model[prop] === user.id;
   },
   isAdmin: function isAdmin() {
-    return ['JohnDoe', 'JaneDoe'].includes(user.name);
+    return user.isAdmin;
   }
 };
 
@@ -93871,7 +93871,7 @@ Vue.use(vue_instantsearch__WEBPACK_IMPORTED_MODULE_0__["default"]);
 var authorizations = __webpack_require__(/*! ./authorizations */ "./resources/js/authorizations.js");
 
 window.Vue.prototype.authorize = function () {
-  //Additional admin privileges
+  //Additional Admin privileges
   if (!window.App.signedIn) return false;
 
   for (var _len = arguments.length, params = new Array(_len), _key = 0; _key < _len; _key++) {

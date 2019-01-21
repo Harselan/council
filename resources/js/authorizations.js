@@ -8,6 +8,6 @@ module.exports =
     },
     isAdmin()
     {
-        return [ 'JohnDoe', 'JaneDoe' ].includes( user.name );
+        return user.isAdmin;
     }
 };

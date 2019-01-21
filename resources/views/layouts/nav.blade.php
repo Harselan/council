@@ -49,6 +49,14 @@
 						</li>
 					@endif
 				@else
+					@if( auth()->user()->isAdmin() )
+						<li class="nav-item">
+							<a href="{{ route( 'admin.dashboard.index' ) }}" class="nav-link" >
+								<img src="{{ asset( 'images/settings.png' ) }}" width="20px" alt="" >
+							</a >
+						</li>
+					@endif
+
 					<user-notifications></user-notifications>
 					<li class="nav-item dropdown">
 						<a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>

@@ -24,7 +24,7 @@ let authorizations = require( './authorizations' );
 
 window.Vue.prototype.authorize = function( ...params )
 {
-    //Additional admin privileges
+    //Additional Admin privileges
 
     if( !window.App.signedIn ) return false;
 
