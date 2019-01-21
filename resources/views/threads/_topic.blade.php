@@ -44,7 +44,9 @@
 		</div>
 	</div>
 
-	<div class="card-body" v-html="body"></div>
+	<div class="card-body" ref="question">
+		<highlight :content="body"></highlight>
+	</div>
 
 	<div class="card-footer bg-white" v-if="authorize( 'owns', thread )">
 		<button class="btn btn-sm btn-outline-info" @click="editing = true">Edit</button>
