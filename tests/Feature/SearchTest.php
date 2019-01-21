@@ -14,6 +14,11 @@ class SearchTest extends TestCase
     /** @test */
     public function a_user_can_search_threads()
     {
+    	if( empty(config( 'scout.algolia.id' )) )
+	    {
+		    static::markTestSkipped('Algolia keys was not found, skipping test');
+	    }
+
     	config( [ 'scout.driver' => 'algolia' ] );
 
 	    $search = 'foobar';
