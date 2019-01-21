@@ -12,6 +12,7 @@ before_script:
 
 script:
   - php artisan key:generate
+  - phpcs --ignore=app/Http/Controllers/Auth,app/Http/Controllers/Controller.php app/Http/Controllers
   - vendor/bin/phpunit
 
 services:
