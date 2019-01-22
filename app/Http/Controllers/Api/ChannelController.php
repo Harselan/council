@@ -11,7 +11,7 @@ class ChannelController extends Controller
 	{
 		return cache()->rememberForever( 'channels', function()
 		{
-			return Channel::where( 'archived', false )->orderBy( 'name', 'asc' )->get();
+			return Channel::all();
 		} );
 	}
 }
