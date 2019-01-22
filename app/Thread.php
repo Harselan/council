@@ -13,7 +13,6 @@ class Thread extends Model
 
 	protected $fillable = [ 'title', 'body', 'user_id', 'channel_id', 'slug', 'best_reply_id', 'locked', 'pinned' ];
 	protected $with     = [ 'creator', 'channel' ];
-	protected $appends  = [ 'isSubscribedTo' ];
 	protected $casts    = [ 'locked' => 'boolean', 'pinned' => 'boolean' ];
 
 	protected static function boot()
