@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Rules\Recaptcha;
+use App\Thread;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\TestCase;
 
@@ -172,5 +173,16 @@ class CreateThreadsTest extends TestCase
 	    	'subject_id'    => $thread->id,
 		    'subject_type'  => get_class( $thread )
 	    ] );
+    }
+
+    /** @test */
+    function a_new_thread_cannot_be_created_in_an_archived_channel()
+    {
+    	$channel = create( 'App\Channel', ['archived' => true ] );
+
+    	$this->publishThread( [ 'channel_id' => $channel->id ] )
+	        ->assertSessionHasErrors('channel_id');
+
+    	$this->assertCount( 0, $channel->threads );
     }
 }
