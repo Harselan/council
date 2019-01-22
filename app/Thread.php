@@ -37,7 +37,8 @@ class Thread extends Model
 
 	public function path()
 	{
-		return "/threads/{$this->channel->slug}/{$this->slug}";
+		$channelSlug = isset( $this->channel ) ? $this->channel->slug : '';
+		return "/threads/{$channelSlug}/{$this->slug}";
 	}
 
 	public function replies()
