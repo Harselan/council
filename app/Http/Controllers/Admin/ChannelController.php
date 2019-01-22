@@ -11,7 +11,7 @@ class ChannelController extends Controller
 {
 	public function index()
 	{
-		return view( 'Admin.channels.index', [ 'channels' => Channel::withoutGlobalScopes()->get() ] );
+		return view( 'Admin.channels.index', [ 'channels' => Channel::withoutGlobalScopes()->withCount('threads')->get() ] );
 	}
 
 	public function create()

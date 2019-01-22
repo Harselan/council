@@ -23,7 +23,7 @@
 						<td>{{ $channel->slug }}</td>
 						<td>{{ $channel->description }}</td>
 						<td>{{ $channel->archived ? 'archived' : 'active' }}</td>
-						<td>x</td>
+						<td>{{ $channel->threads_count }}</td>
 						<td><a class="btn btn-outline-primary btn-sm" href="{{ route( 'admin.channels.edit', $channel ) }}" >Edit</a ></td>
 					</tr>
 				@empty
