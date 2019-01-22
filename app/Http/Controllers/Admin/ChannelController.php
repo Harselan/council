@@ -41,13 +41,11 @@ class ChannelController extends Controller
 
 	public function update( Channel $channel )
 	{
-		$channel->update(
-			request()->validate([
+		$channel->update( request()->validate( [
 				'name' => [ 'required', Rule::unique( 'channels', 'slug' )->ignore( $channel->id ) ],
 				'description' => 'required',
 				'archived' => 'required|boolean',
-			])
-		);
+			] ) + [ 'slug' => str_slug( request('name') ) ] );
 
 		Cache::forget('channels');
 
