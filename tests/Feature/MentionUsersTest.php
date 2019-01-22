@@ -24,7 +24,7 @@ class MentionUsersTest extends TestCase
 	    $thread = create( 'App\Thread' );
 	    // And JohnDoe replies and mentions @JaneDoe.
 	    $reply = make( 'App\Reply', [ 'body' => 'Hello @JaneDoe you might want to see this' ] );
-	    $this->json( 'post', route( 'replies.store', [ $thread->channel->slug, $thread->slug ] ), $reply->toArray() );
+	    $this->json( 'post', route( 'replies.store', [ $thread->channel, $thread ] ), $reply->toArray() );
 	    // Then, JaneDoe should be notified.
 	    $this->assertCount(1, $jane->notifications );
     }

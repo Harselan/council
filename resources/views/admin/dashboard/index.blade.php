@@ -1,11 +1,5 @@
-@extends('admin.layouts.app')
+@extends('admin.layout.app')
 
-@section('content')
-	<div class="container">
-		<div class="card">
-			<div class="card-body">
-				<h5 class="card-title text-muted">You are on the administration dashboard</h5>
-			</div>
-		</div>
-	</div>
+@section('administration-content')
+	<p>You are on the administration dashboard</p>
 @endsection

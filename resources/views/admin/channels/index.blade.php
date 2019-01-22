@@ -1,37 +1,39 @@
-@extends('admin.layouts.app')
+@extends('admin.layout.app')
 
-@section('content')
-	<div class="card">
-		<div class="card-header bg-white">
-			<a href="{{ route( 'admin.channels.create' ) }}" class="btn btn-outline-success btn-sm" >Create Channel</a >
-		</div>
+@section('administration-content')
+	<p class="mb-8">
+		<a class="btn bg-blue" href="{{ route('admin.channels.create') }}">
+			New Channel <span class="glyphicon glyphicon-plus"></span>
+		</a>
+	</p>
 
-		<div class="card-body">
-			<table class="table">
-				<tr>
-					<td>Name</td>
-					<td>Slug</td>
-					<td>Description</td>
-					<td>Threads</td>
-					<td>Status</td>
-					<td>Actions</td>
-				</tr>
+	<table style="border-collapse: collapse">
+		<thead class="bg-grey-lightest text-grey-darkest uppercase tracking-wide text-xs">
+		<tr>
+			<th class="p-4 border-b">Name</th>
+			<th class="p-4 border-b">Slug</th>
+			<th class="p-4 border-b">Description</th>
+			<th class="p-4 border-b">Threads</th>
+			<th class="p-4 border-b">Actions</th>
+		</tr>
+		</thead>
 
-				@forelse( $channels as $channel )
-					<tr>
-						<td>{{ $channel->name }}</td>
-						<td>{{ $channel->slug }}</td>
-						<td>{{ $channel->description }}</td>
-						<td>{{ $channel->archived ? 'archived' : 'active' }}</td>
-						<td>{{ $channel->threads_count }}</td>
-						<td><a class="btn btn-outline-primary btn-sm" href="{{ route( 'admin.channels.edit', $channel ) }}" >Edit</a ></td>
-					</tr>
-				@empty
-					<tr>
-						<td>Nothing here.</td>
-					</tr>
-				@endforelse
-			</table>
-		</div>
-	</div>
+		<tbody>
+		@forelse($channels as $channel)
+			<tr class="border-b {{ $channel->archived ? 'bg-red-lighter' : '' }}">
+				<td class="text-sm p-4 border-b">{{ $channel->name }}</td>
+				<td class="text-sm p-4 border-b">{{ $channel->slug }}</td>
+				<td class="text-sm p-4 border-b">{{ $channel->description }}</td>
+				<td class="text-sm p-4 border-b">{{ $channel->threads_count }}</td>
+				<td class="text-sm p-4 border-b">
+					<a href="{{ route('admin.channels.edit', $channel) }}" class="text-blue link text-sm">Edit</a>
+				</td>
+			</tr>
+		@empty
+			<tr>
+				<td>Nothing here.</td>
+			</tr>
+		@endforelse
+		</tbody>
+	</table>
 @endsection

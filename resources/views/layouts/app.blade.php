@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ config('app.locale') }}">
 <head>
     <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- CSRF Token -->
@@ -9,48 +10,50 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
-
-    <script >
-        window.App = {!! json_encode( [
-            'csrfToken' => csrf_token(),
-            'user'      => Auth::user(),
-            'signedIn'  => Auth::check(),
-         ] ) !!};
-    </script >
-
-    <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
-
     <!-- Styles -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600" rel="stylesheet">
+
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/trix/1.0.0/trix.css" rel="stylesheet" >
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+    <!-- Scripts -->
+    <script>
+        window.App = {!! json_encode([
+            'csrfToken' => csrf_token(),
+            'user' => Auth::user(),
+            'signedIn' => Auth::check()
+        ]) !!};
+    </script>
 
+    <script src='https://www.google.com/recaptcha/api.js'></script>
 
-    <style >
-        body { padding-bottom:100px; }
-        .level { display:flex; align-items: center; }
-        .flex { flex: 1; }
-        [v-cloak] { display:none; }
-        .ais-highlight > em { background: yellow; font-style: normal; }
-    </style >
-
-    @yield( 'head' )
+    @yield('head')
 </head>
-<body style="padding-bottom:100px;">
-    <div id="app">
-        @include( 'layouts.nav' )
 
-        @yield('content')
+<body class="font-sans bg-grey-lighter">
+<div id="app">
+    @include ('layouts.nav')
 
-        <flash message="{{ session( 'flash' ) }}"></flash>
+    <div class="container mx-auto">
+        <div class="flex">
+            @section('sidebar')
+                @include('sidebar')
+            @show
+
+            <div class="px-10 bg-white flex-1">
+                @yield('content')
+            </div>
+
+            @include('channels-sidebar')
+        </div>
     </div>
-    @yield( 'scripts' )
+
+    <flash message="{{ session('flash') }}"></flash>
+
+    @include('modals.all')
+</div>
+
+<!-- Scripts -->
+<script src="{{ asset('js/app.js') }}"></script>
+@yield('scripts')
 </body>
 </html>

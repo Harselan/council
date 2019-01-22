@@ -25,7 +25,7 @@ class ThreadController extends Controller
 	 *
 	 * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|mixed
 	 */
-    public function index( Channel $channel, ThreadFilters $filters, Trending $trending )
+    public function index( Channel $channel, ThreadFilters $filters )
     {
 	    $threads = $this->getThreads( $channel, $filters );
 
@@ -35,8 +35,8 @@ class ThreadController extends Controller
 	    }
 
         return view( 'threads.index', [
-	        'threads'   => $threads,
-	        'trending'  => $trending->get()
+	        'threads' => $threads,
+	        'channel' => $channel
         ] );
     }
 
@@ -93,7 +93,7 @@ class ThreadController extends Controller
 	 *
 	 * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
 	 */
-    public function show( $channelId, Thread $thread, Trending $trending )
+    public function show( Channel $channel, Thread $thread, Trending $trending )
     {
     	if( auth()->check() )
 	    {
@@ -150,8 +150,9 @@ class ThreadController extends Controller
 	 */
 	public function getThreads( Channel $channel, ThreadFilters $filters )
 	{
-		$threads = Thread::orderBy( 'pinned', 'DESC' )
+		$threads = Thread::latest('pinned')
 			->latest()
+			->with('channel')
 			->filter( $filters );
 
 		if( $channel->exists )

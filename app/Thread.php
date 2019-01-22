@@ -54,6 +54,11 @@ class Thread extends Model
 		return $this->belongsTo( User::class, 'user_id' );
 	}
 
+	public function title()
+	{
+		return $this->title;
+	}
+
 	public function channel()
 	{
 		return $this->belongsTo( Channel::class )->withoutGlobalScope( 'active' );

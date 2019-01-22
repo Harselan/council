@@ -42,6 +42,11 @@ class Reply extends Model
 		return $this->belongsTo( Thread::class );
 	}
 
+	public function title()
+	{
+		return $this->thread->title;
+	}
+
 	public function wasJustPublished()
 	{
 		return $this->created_at->gt( Carbon::now()->subMinute() );

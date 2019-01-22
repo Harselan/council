@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use \App\Channel;
+use App\Trending;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -12,7 +12,7 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot( Trending $trending )
     {
         \Validator::extend( 'spamfree', 'App\Rules\SpamFree@passes' );
 	    \Validator::extend( 'recaptcha', 'App\Rules\Recaptcha@passes' );

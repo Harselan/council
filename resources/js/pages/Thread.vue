@@ -5,23 +5,39 @@
 
 	export default
 	{
+        props: ['thread'],
 		components: { Replies, SubscribeButton, Highlight },
-		props: ['thread'],
 		data()
 		{
 		    return {
 		        repliesCount: this.thread.replies_count,
                 locked: this.thread.locked,
                 pinned: this.thread.pinned,
-			    editing: false,
-			    title: this.thread.title,
-			    body: this.thread.body,
+                title: this.thread.title,
+                body: this.thread.body,
                 form: {},
+			    editing: false,
+			    feedback: "",
+			    errors: false
             };
 		},
 		created()
 		{
             this.resetForm();
+		},
+		watch:
+		{
+		    editing( enabled )
+			{
+			    if( enabled )
+			    {
+			        this.$modal.show('update-thread');
+			    }
+			    else
+		        {
+                    this.$modal.hide('update-thread');
+		        }
+			}
 		},
 		methods:
 		{
@@ -59,7 +75,12 @@
                    this.body  = this.form.body;
 
 			       flash( 'Your thread has been updated!' );
-			    } );
+			    } ).
+                catch( ( error ) =>
+				{
+				    this.feedback   = "Whoops, validation failed.";
+				    this.errors     = error.response.data.errors;
+				} );
 			},
 			resetForm()
 			{
@@ -70,6 +91,8 @@
 			    };
 
 			    this.editing = false;
+
+                this.$modal.hide( "update-thread" );
 			}
 		}
 	}

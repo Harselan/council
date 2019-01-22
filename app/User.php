@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'avatar_path', 'confirmation_token',
+        'name', 'email', 'password', 'avatar_path', 'confirmation_token', 'username'
     ];
 
     /**
@@ -88,6 +88,6 @@ class User extends Authenticatable
 
 	public function getAvatarPathAttribute( $avatar )
 	{
-		return asset( $avatar ?: 'images/avatars/default.png' );
+		return asset( $avatar ?: 'images/avatars/default.svg' );
 	}
 }

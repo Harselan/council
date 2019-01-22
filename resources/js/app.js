@@ -30,12 +30,17 @@ Vue.config.ignoredElements = ['trix-editor'];
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('flash', require('./components/Flash.vue').default);
-Vue.component('thread-view', require('./pages/Thread.vue').default);
 Vue.component('paginator', require('./components/Paginator.vue').default);
 Vue.component('user-notifications', require('./components/UserNotifications.vue').default);
 Vue.component('avatar-form', require('./components/AvatarForm.vue').default);
 Vue.component('wysiwyg', require('./components/Wysiwyg.vue').default);
+Vue.component('dropdown', require('./components/Dropdown.vue').default);
 Vue.component('channel-dropdown', require('./components/ChannelDropdown.vue').default);
+Vue.component('logout-button', require('./components/LogoutButton.vue').default);
+Vue.component('login', require('./components/Login.vue').default);
+Vue.component('register', require('./components/Register.vue').default);
+
+Vue.component('thread-view', require('./pages/Thread.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -44,5 +49,21 @@ Vue.component('channel-dropdown', require('./components/ChannelDropdown.vue').de
  */
 
 const app = new Vue({
-    el: '#app'
+    el: '#app',
+    data:
+    {
+        searching: false,
+    },
+    methods:
+    {
+        search()
+        {
+            this.searching = true;
+
+            this.$nextTick( () =>
+            {
+                this.$refs.search.focus();
+            } );
+        }
+    }
 });

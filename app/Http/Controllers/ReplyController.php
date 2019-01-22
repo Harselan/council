@@ -32,7 +32,7 @@ class ReplyController extends Controller
 	 *
 	 * @return \Illuminate\Database\Eloquent\Model
 	 */
-    public function store( $channelId, Thread $thread, CreatePostRequest $form )
+    public function store( Channel $channel, Thread $thread, CreatePostRequest $form )
     {
     	if( $thread->locked )
 	    {
