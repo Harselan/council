@@ -4,8 +4,12 @@ This is an open source forum that was built with help from the laracasts series 
 
 ## Installation
 
+### Prerequisites
+* To run this project, you must have PHP 7 installed as a prerequisite.
+* You should setup a host on your web server for your local domain. For this you could also configure Laravel Homestead or Valet.
+* If you want to use Redis as your cache driver you need to install the Redis Server. You can either use homebrew on Mac or compile from source (https://redis.io/topics/quickstart)
+
 ### Step 1.
-> To run this project, you must have PHP 7 installed as a prerequisite.
 
 Begin by cloning this repository to your machine, and installing all Composer & NPM dependencies.
 
