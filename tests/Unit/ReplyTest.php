@@ -11,66 +11,87 @@ class ReplyTest extends TestCase
 	use DatabaseMigrations;
 
 	#vendor/bin/phpunit tests/Unit/ReplyTest.php
-    /** @test */
-    function it_has_an_owner()
-    {
-    	$reply = create( 'App\Reply' );
 
-    	$this->assertInstanceOf( 'App\User', $reply->owner );
-    }
+	/** @test */
+	function it_has_an_owner()
+	{
+		$reply = create( 'App\Reply' );
 
-    /** @test */
-    function it_knows_if_it_was_just_published()
-    {
-    	$reply = create( 'App\Reply' );
+		$this->assertInstanceOf( 'App\User', $reply->owner );
+	}
 
-    	$this->assertTrue( $reply->wasJustPublished() );
+	/** @test */
+	function it_knows_if_it_was_just_published()
+	{
+		$reply = create( 'App\Reply' );
 
-    	$reply->created_at = Carbon::now()->subMonth();
+		$this->assertTrue( $reply->wasJustPublished() );
 
-	    $this->assertFalse( $reply->wasJustPublished() );
-    }
+		$reply->created_at = Carbon::now()->subMonth();
 
-    /** @test */
-    function it_can_detect_all_mentioned_users_in_the_body()
-    {
-    	$reply = new \App\Reply( [
-    		'body' => '@JaneDoe want to see @JohnDoe'
-	    ] );
+		$this->assertFalse( $reply->wasJustPublished() );
+	}
 
-    	$this->assertEquals( [ 'JaneDoe', 'JohnDoe' ], $reply->mentionedUsers() );
-    }
+	/** @test */
+	function it_can_detect_all_mentioned_users_in_the_body()
+	{
+		$reply = new \App\Reply(
+			[
+				'body' => '@JaneDoe want to see @JohnDoe'
+			] );
 
-    /** @test */
-    function it_wraps_mentioned_usernames_in_the_body_within_anchor_tags()
-    {
-	    $reply = new \App\Reply( [
-		    'body' => 'Hello @Jane-Doe.'
-	    ] );
+		$this->assertEquals( [ 'JaneDoe', 'JohnDoe' ], $reply->mentionedUsers() );
+	}
 
-	    $this->assertEquals(
-	    	'Hello <a href="/profiles/Jane-Doe">@Jane-Doe</a>.',
-		    $reply->body
-	    );
-    }
+	/** @test */
+	function it_wraps_mentioned_usernames_in_the_body_within_anchor_tags()
+	{
+		$reply = new \App\Reply(
+			[
+				'body' => 'Hello @Jane-Doe.'
+			] );
 
-    /** @test */
-    function it_knows_if_it_is_the_best_reply()
-    {
-    	$reply = create( 'App\Reply' );
+		$this->assertEquals(
+			'Hello <a href="/profiles/Jane-Doe">@Jane-Doe</a>.',
+			$reply->body
+		);
+	}
 
-    	$this->assertFalse( $reply->isBest() );
+	/** @test */
+	function it_knows_if_it_is_the_best_reply()
+	{
+		$reply = create( 'App\Reply' );
 
-    	$reply->thread->update( [ 'best_reply_id' => $reply->id ] );
+		$this->assertFalse( $reply->isBest() );
 
-	    $this->assertTrue( $reply->fresh()->isBest() );
-    }
+		$reply->thread->update( [ 'best_reply_id' => $reply->id ] );
+
+		$this->assertTrue( $reply->fresh()->isBest() );
+	}
 
 	/** @test */
 	function a_reply_body_is_sanitized_automatically()
 	{
-		$reply = make('App\Reply', [ 'body' => '<script>alert("bad")</script><p>This is okay.</p>' ]);
+		$reply = make( 'App\Reply', [ 'body' => '<script>alert("bad")</script><p>This is okay.</p>' ] );
 
-		$this->assertEquals( '<p>This is okay.</p>',  $reply->body );
+		$this->assertEquals( '<p>This is okay.</p>', $reply->body );
+	}
+
+	/** @test */
+	function a_reply_knows_the_total_xp_earned()
+	{
+		$this->signIn();
+
+		$reply = create( 'App\Reply' );
+
+		$this->assertEquals( 2, $reply->xp ); // 2 xp for creating reply
+
+		$reply->thread->markBestReply( $reply );
+
+		$this->assertEquals( 52, $reply->xp ); // 50 xp for best reply
+
+		$this->post( route( 'replies.favorite', $reply ) ); // 5 xp for favoriting
+
+		$this->assertEquals( 57, $reply->xp );
 	}
 }

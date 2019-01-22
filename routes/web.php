@@ -49,6 +49,8 @@ Route::get( '/profiles/{user}', 'ProfilesController@show' )->name( 'profile' );
 Route::get( '/profiles/{user}/notifications', 'UserNotificationsController@index' )->name( 'notifications.getunread' );
 Route::delete( '/profiles/{user}/notifications/{notification}', 'UserNotificationsController@destroy' )->name( 'notifications.read' );
 
+Route::get( '/profiles/{user}/activity', 'ProfilesController@index' )->name('activity');
+
 Route::post( '/replies/{reply}/best', 'BestRepliesController@store' )->name( 'best-replies.store' );
 
 Auth::routes();

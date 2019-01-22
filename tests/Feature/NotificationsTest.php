@@ -12,7 +12,7 @@ class NotificationsTest extends TestCase
 {
 	use DatabaseMigrations;
 
-	#vendor.css/bin/phpunit tests/Feature/NotificationsTest.php
+	#vendor/bin/phpunit tests/Feature/NotificationsTest.php
 
 	public function setUp()
 	{
@@ -65,7 +65,7 @@ class NotificationsTest extends TestCase
 	    {
 		    $this->assertCount( 1, $user->unreadNotifications );
 
-		    $this->delete( route( 'notifications.read', [ $user->name, $user->unreadNotifications->first()->id ] ) );
+		    $this->delete( route( 'notifications.read', [ $user, $user->unreadNotifications->first()->id ] ) );
 
 		    $this->assertCount( 0, $user->fresh()->unreadNotifications );
 	    } );

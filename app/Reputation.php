@@ -6,11 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Reputation extends Model
 {
-    const THREAD_WAS_PUBLISHED  = 10;
-	const BEST_REPLY_AWARDED    = 50;
-    const REPLY_POSTED          = 2;
-    const REPLY_FAVORITED       = 5;
-
     public static function gain( $user, $points )
     {
     	$user->increment( 'reputation', $points );

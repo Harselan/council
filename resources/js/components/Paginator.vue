@@ -1,13 +1,13 @@
 <template>
 	<ul class="pagination" v-if="shouldPaginate">
-		<li class="page-item" v-show="prevUrl">
+		<li class="inline" v-show="prevUrl">
 			<a class="page-link" href="#" aria-label="Previous" rel="prev" @click.prevent="page--">
-				<span aria-hidden="true">&laquo; Previous</span>
+				<span class="text-xs mr-2" aria-hidden="true">&laquo; Previous</span>
 			</a>
 		</li>
-		<li class="page-item" v-show="nextUrl">
+		<li class="inline" v-show="nextUrl">
 			<a class="page-link" href="#" aria-label="Next" rel="next" @click.prevent="page++">
-				<span aria-hidden="true">Next &raquo;</span>
+				<span class="text-xs mr-2" aria-hidden="true">Next &raquo;</span>
 			</a>
 		</li>
 	</ul>

@@ -69,7 +69,7 @@
 <script>
     import Favorite from "./Favorite.vue";
     import Highlight from "./Highlight.vue";
-    import moment from "moment";
+
     export default {
         props: ["reply"],
         components: { Favorite, Highlight },
@@ -83,7 +83,7 @@
         },
         computed: {
             ago() {
-                return moment(this.reply.created_at).fromNow() + "...";
+                return this.reply.created_at + "...";
             },
             bestReplyClasses() {
                 let classes = [this.isBest ? "text-green" : "text-grey-light"];

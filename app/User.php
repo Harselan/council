@@ -37,7 +37,7 @@ class User extends Authenticatable
 
 	public function getRouteKeyName()
 	{
-		return 'name';
+		return 'username';
 	}
 
 	public function threads()

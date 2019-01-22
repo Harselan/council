@@ -16,7 +16,7 @@ class ReputationTest extends TestCase
     {
 	    $thread = create('App\Thread');
 
-	    $this->assertEquals( Reputation::THREAD_WAS_PUBLISHED, $thread->creator->reputation );
+	    $this->assertEquals( config('council.reputation.thread_was_published'), $thread->creator->reputation );
     }
 
 	/** @test */
@@ -26,7 +26,7 @@ class ReputationTest extends TestCase
 
 		$thread = create( 'App\Thread', [ 'user_id' => auth()->id() ] );
 
-		$this->assertEquals( Reputation::THREAD_WAS_PUBLISHED, $thread->creator->reputation );
+		$this->assertEquals( config('council.reputation.thread_was_published'), $thread->creator->reputation );
 
 		$this->delete( $thread->path() );
 
@@ -43,7 +43,7 @@ class ReputationTest extends TestCase
 			'body'      => 'Here is a reply.'
 		]);
 
-		$this->assertEquals( Reputation::REPLY_POSTED, $reply->owner->reputation );
+		$this->assertEquals( config('council.reputation.reply_posted'), $reply->owner->reputation );
 	}
 
 	/** @test */
@@ -53,7 +53,7 @@ class ReputationTest extends TestCase
 
 		$reply = create( 'App\Reply', [ 'user_id' => auth()->id() ] );
 
-		$this->assertEquals( Reputation::REPLY_POSTED, $reply->owner->reputation );
+		$this->assertEquals( config('council.reputation.reply_posted'), $reply->owner->reputation );
 
 		$this->delete( route( 'replies.destroy', $reply ) );
 
@@ -72,7 +72,7 @@ class ReputationTest extends TestCase
 
 		$reply->thread->markBestReply( $reply );
 
-		$total = Reputation::REPLY_POSTED + Reputation::BEST_REPLY_AWARDED;
+		$total = config('council.reputation.reply_posted') + config('council.reputation.best_reply_awarded');
 
 		$this->assertEquals( $total, $reply->owner->reputation );
 	}
@@ -91,7 +91,7 @@ class ReputationTest extends TestCase
 
 		$this->post( route( 'replies.favorite', $reply ) );
 
-		$total = Reputation::REPLY_POSTED + Reputation::REPLY_FAVORITED;
+		$total = config('council.reputation.reply_posted') + config( 'council.reputation.reply_favorited' );
 
 		$this->assertEquals( $total, $reply->owner->fresh()->reputation );
 	}
@@ -105,13 +105,13 @@ class ReputationTest extends TestCase
 
 		$this->post( route( 'replies.favorite', $reply ) );
 
-		$total = Reputation::REPLY_POSTED + Reputation::REPLY_FAVORITED;
+		$total = config('council.reputation.reply_posted') + config( 'council.reputation.reply_favorited' );
 
 		$this->assertEquals( $total, $reply->owner->fresh()->reputation );
 
 		$this->post( route( 'replies.favorite', $reply ) );
 
-		$total = Reputation::REPLY_POSTED + Reputation::REPLY_FAVORITED - Reputation::REPLY_FAVORITED;
+		$total = config('council.reputation.reply_posted') + config( 'council.reputation.reply_favorited' ) - config( 'council.reputation.reply_favorited' );
 
 		$this->assertEquals( $total, $reply->owner->fresh()->reputation );
 	}

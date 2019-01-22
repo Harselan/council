@@ -14,6 +14,7 @@ class Thread extends Model
 	protected $fillable = [ 'title', 'body', 'user_id', 'channel_id', 'slug', 'best_reply_id', 'locked', 'pinned' ];
 	protected $with     = [ 'creator', 'channel' ];
 	protected $casts    = [ 'locked' => 'boolean', 'pinned' => 'boolean' ];
+	protected $appends  = [ 'path' ];
 
 	protected static function boot()
 	{
@@ -23,20 +24,30 @@ class Thread extends Model
 		{
 			$thread->replies->each->delete();
 
-			Reputation::lose( $thread->creator, Reputation::THREAD_WAS_PUBLISHED );
+			Reputation::lose( $thread->creator, config('council.reputation.thread_was_published') );
 		} );
 
 		static::created( function ( $thread )
 		{
 			$thread->update( [ 'slug' => $thread->title ] );
 
-			Reputation::gain( $thread->creator, Reputation::THREAD_WAS_PUBLISHED );
+			Reputation::gain( $thread->creator, config('council.reputation.thread_was_published') );
 		} );
 	}
 
 	public function path()
 	{
 		return "/threads/{$this->channel->slug}/{$this->slug}";
+	}
+
+	public function getPathAttribute()
+	{
+		if( !$this->channel )
+		{
+			return '';
+		}
+
+		return $this->path();
 	}
 
 	public function replies()
@@ -143,7 +154,7 @@ class Thread extends Model
 	{
 		$this->update( [ 'best_reply_id' => $reply->id ] );
 
-		Reputation::gain( $reply->owner, Reputation::BEST_REPLY_AWARDED );
+		Reputation::gain( $reply->owner, config('council.reputation.best_reply_awarded') );
 	}
 
 	public function toSearchableArray()

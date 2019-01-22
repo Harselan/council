@@ -33,12 +33,19 @@ Vue.component('flash', require('./components/Flash.vue').default);
 Vue.component('paginator', require('./components/Paginator.vue').default);
 Vue.component('user-notifications', require('./components/UserNotifications.vue').default);
 Vue.component('avatar-form', require('./components/AvatarForm.vue').default);
+
+Vue.component('activities', require('./components/Activities.vue').default);
+Vue.component('activity-layout', require('./components/ActivityLayout.vue').default);
+Vue.component('activity-favorite', require('./components/ActivityFavorite.vue').default);
+Vue.component('activity-reply', require('./components/ActivityReply.vue').default);
+Vue.component('activity-thread', require('./components/ActivityThread.vue').default);
 Vue.component('wysiwyg', require('./components/Wysiwyg.vue').default);
 Vue.component('dropdown', require('./components/Dropdown.vue').default);
 Vue.component('channel-dropdown', require('./components/ChannelDropdown.vue').default);
 Vue.component('logout-button', require('./components/LogoutButton.vue').default);
 Vue.component('login', require('./components/Login.vue').default);
 Vue.component('register', require('./components/Register.vue').default);
+Vue.component("highlight", require("./components/Highlight").default);
 
 Vue.component('thread-view', require('./pages/Thread.vue').default);
 
