@@ -57,8 +57,12 @@ Route::get( '/register/confirm', 'Auth\RegisterConfirmationController@index' )->
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get( 'api/users', 'Api\UserController@index' )->name('api.users');
-Route::post( 'api/users/{user}/avatar', 'Api\UserAvatarController@store' )->name('avatar');
+Route::group( [ 'prefix' => 'api' ], function()
+{
+	Route::get( 'users', 'Api\UserController@index' )->name('api.users');
+	Route::post( 'users/{user}/avatar', 'Api\UserAvatarController@store' )->name('avatar');
+	Route::get( 'channels', 'Api\ChannelController@index' )->name('api.channels');
+} );
 
 Route::group(array('prefix' => 'admin', 'middleware' => 'admin', 'namespace' => 'Admin'), function()
 {
@@ -66,4 +70,6 @@ Route::group(array('prefix' => 'admin', 'middleware' => 'admin', 'namespace' => 
 	Route::post( '/channels', 'ChannelController@store' )->name('admin.channels.store');
 	Route::get( '/channels', 'ChannelController@index' )->name('admin.channels.index');
 	Route::get( '/channels/create', 'ChannelController@create')->name('admin.channels.create');
+	Route::get( '/channels/{channel}/edit', 'ChannelController@edit')->name('admin.channels.edit');
+	Route::patch( '/channels/{channel}', 'ChannelController@update')->name('admin.channels.update');
 });

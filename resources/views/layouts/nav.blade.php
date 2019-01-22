@@ -24,7 +24,7 @@
 					</ul>
 				</li>
 				<li class="nav-item"><a href="{{ route( 'threads.create' ) }}" class="nav-link" >New Thread</a ></li>
-				<channel-dropdown :channels="{{ $channels }}"></channel-dropdown>
+				<channel-dropdown></channel-dropdown>
 			</ul>
 
 			<!-- Right Side Of Navbar -->
