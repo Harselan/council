@@ -1,20 +1,6 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
-Route::get('/', function () {
-    return view('welcome');
-});
-
+Route::get( '/', 'ThreadController@index' );
 
 Route::view( 'scan', 'scan' );
 
@@ -72,6 +58,6 @@ Route::group(array('prefix' => 'admin', 'middleware' => 'admin', 'namespace' => 
 	Route::post( '/channels', 'ChannelController@store' )->name('admin.channels.store');
 	Route::get( '/channels', 'ChannelController@index' )->name('admin.channels.index');
 	Route::get( '/channels/create', 'ChannelController@create')->name('admin.channels.create');
-	Route::get( '/channels/{channel}/edit', 'ChannelController@edit')->name('admin.channels.edit');
-	Route::patch( '/channels/{channel}', 'ChannelController@update')->name('admin.channels.update');
+	Route::get( '/channels/{any_channel}/edit', 'ChannelController@edit')->name('admin.channels.edit');
+	Route::patch( '/channels/{any_channel}', 'ChannelController@update')->name('admin.channels.update');
 });
