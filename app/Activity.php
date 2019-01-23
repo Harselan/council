@@ -36,6 +36,6 @@ class Activity extends Model
 	    return static::where( 'user_id', $user->id )
 		    ->latest()
 		    ->with( 'subject' )
-		    ->paginate( 30 );
+		    ->paginate( config( 'council.pagination.perPage' ) );
     }
 }
