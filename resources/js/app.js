@@ -71,6 +71,33 @@ const app = new Vue({
             {
                 this.$refs.search.focus();
             } );
+        },
+        showNewThreadForm()
+        {
+            this.$modal.show('new-thread');
+
+            setTimeout( this.addRecaptchaListener, 10 );
+        },
+        addRecaptchaListener()
+        {
+            $(document).ready( function()
+            {
+                var form = $('#form');
+
+                form.submit( function()
+                {
+                    event.preventDefault();
+                    grecaptcha.ready(function()
+                    {
+                        grecaptcha.execute( recaptchaKey, { action: 'create_thread' } ).then( function( token )
+                        {
+                            form.prepend('<input type="hidden" name="g-recaptcha-response" value="' + token + '">');
+                            form.prepend('<input type="hidden" name="action" value="create_thread">');
+                            form.unbind('submit').submit();
+                        } );
+                    } );
+                } );
+            } );
         }
     }
 });

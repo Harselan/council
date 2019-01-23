@@ -1,7 +1,7 @@
 @if (auth()->check())
 	<modal v-cloak name="new-thread" height="auto" transition="slide">
-		<form method="POST" action="/threads" class="p-6 py-8">
-			{{ csrf_field() }}
+		<form method="POST" id="form" action="{{ route( 'threads.store' ) }}" class="p-6 py-8">
+			@csrf
 
 			<div class="flex mb-6 -mx-4">
 				<div class="flex-1 px-4">
@@ -26,10 +26,6 @@
 
 			<div class="mb-6">
 				<wysiwyg name="body"></wysiwyg>
-			</div>
-
-			<div class="mb-6">
-				<div class="g-recaptcha" data-sitekey="{{ config('services.recaptcha.key') }}"></div>
 			</div>
 
 			<div class="flex justify-end">

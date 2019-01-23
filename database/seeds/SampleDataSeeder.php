@@ -63,6 +63,7 @@ class SampleDataSeeder extends Seeder
 	    {
 	    	factory( Channel::class )->create( [
 	    		'name'          => $channel['name'],
+			    'slug'          => str_slug( $channel['name'] ),
 			    'description'   => $channel['description'],
 			    'archived'      => false,
 			    'color'         => $channel['color']

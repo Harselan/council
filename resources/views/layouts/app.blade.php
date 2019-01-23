@@ -24,7 +24,8 @@
         ]) !!};
     </script>
 
-    <script src='https://www.google.com/recaptcha/api.js'></script>
+    <script src='https://www.google.com/recaptcha/api.js?render={{ config( 'council.recaptcha.key' ) }}'></script>
+    <script > var recaptchaKey = '{{ config( 'council.recaptcha.key' ) }}'; </script >
 
     @yield('head')
 </head>
