@@ -47,6 +47,7 @@ Vue.component('login', require('./components/Login.vue').default);
 Vue.component('register', require('./components/Register.vue').default);
 Vue.component("highlight", require("./components/Highlight").default);
 
+Vue.component("search", require('./components/search/Search.vue').default);
 Vue.component('thread-view', require('./pages/Thread.vue').default);
 
 /**

@@ -5,16 +5,16 @@ namespace App;
 use App\Inspections\SpamFilter;
 use App\Events\ThreadReceivedNewReply;
 use Illuminate\Database\Eloquent\Model;
-use Laravel\Scout\Searchable;
 
 class Thread extends Model
 {
-	use RecordsActivity, SpamFilter, Searchable;
+	use RecordsActivity, SpamFilter;
 
 	protected $fillable = [ 'title', 'body', 'user_id', 'channel_id', 'slug', 'best_reply_id', 'locked', 'pinned' ];
 	protected $with     = [ 'creator', 'channel' ];
 	protected $casts    = [ 'locked' => 'boolean', 'pinned' => 'boolean' ];
 	protected $appends  = [ 'path' ];
+	protected static $searchableColumns = [ 'title' ];
 
 	protected static function boot()
 	{
@@ -160,6 +160,18 @@ class Thread extends Model
 	public function toSearchableArray()
 	{
 		return $this->toArray() + [ 'path' => $this->path() ];
+	}
+
+	public static function search( $q )
+	{
+		$search = self::query();
+
+		foreach( self::$searchableColumns as $column )
+		{
+			$search->where( $column, 'like', '%' . $q . '%' );
+		}
+
+		return $search;
 	}
 
 	public function getBodyAttribute( $body )
