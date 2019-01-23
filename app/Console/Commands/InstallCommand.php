@@ -29,10 +29,10 @@ class InstallCommand extends Command
 	{
 		$this->welcome();
 		$this->createEnvFile();
-		if (strlen(config('app.key')) === 0) {
-			$this->call('key:generate');
-			$this->line("~ Secret key properly generated.");
-		}
+
+		$this->call('key:generate');
+		$this->line("~ Secret key properly generated.");
+
 		$this->updateEnvironmentFile($this->requestDatabaseCredentials());
 		if ($this->confirm('Do you want to migrate the database?', false)) {
 			$this->call('migrate');
