@@ -6,6 +6,6 @@
 	<div class="pt-6">
 		@include ('threads._list')
 
-		{{ $threads->render() }}
+		{{ $threads->links('vendor.pagination.default') }}
 	</div>
 @endsection
