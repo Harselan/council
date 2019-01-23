@@ -1,5 +1,5 @@
 {{-- Editing the question. --}}
-<modal name="update-thread" height="auto">
+<modal v-cloak name="update-thread" height="auto">
 	<div class="p-6 py-8">
 		<div class="mb-6 -mx-4">
 			<div class="px-4 mb-6">

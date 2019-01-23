@@ -119,6 +119,39 @@ class ChannelAdministrationTest extends TestCase
 			->assertSessionHasErrors( 'description' );
 	}
 
+	/** @test */
+	public function an_administrator_can_edit_an_archived_channel()
+	{
+		$this->signInAdmin();
+
+		$channel = create( 'App\Channel', [ 'archived' => true ] );
+
+		$this->assertTrue( $channel->archived );
+
+		$this->get( route( 'admin.channels.edit', $channel ) )
+			->assertStatus( Response::HTTP_OK );
+	}
+
+	/** @test */
+	public function an_administrator_can_activate_an_archived_channel()
+	{
+		$this->signInAdmin();
+
+		$channel = create( 'App\Channel', [ 'archived' => true ] );
+
+		$this->assertTrue( $channel->archived );
+
+		$this->patch( route( 'admin.channels.update', $channel ),
+			[
+				'name'          => 'altered',
+				'description'   => 'description for the altered channel',
+				'archived'      => false,
+			]
+		);
+
+		$this->assertFalse( $channel->fresh()->archived );
+	}
+
 	protected function createChannel( $overrides = [] )
 	{
 		$this->signInAdmin();

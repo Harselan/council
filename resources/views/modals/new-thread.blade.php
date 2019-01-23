@@ -1,5 +1,5 @@
 @if (auth()->check())
-	<modal name="new-thread" height="auto" transition="slide">
+	<modal v-cloak name="new-thread" height="auto" transition="slide">
 		<form method="POST" action="/threads" class="p-6 py-8">
 			{{ csrf_field() }}
 

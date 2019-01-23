@@ -39,7 +39,7 @@
                 @include('sidebar')
             @show
 
-            <div class="px-10 bg-white flex-1">
+            <div class="px-10 bg-white pt-3 flex-1">
                 @yield('content')
             </div>
 
