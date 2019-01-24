@@ -35,7 +35,7 @@ trait Favoritable
 
 		if( !$this->favorites()->where( $attributes )->exists() )
 		{
-			Reputation::gain( auth()->user(), config( 'council.reputation.reply_favorited' ) );
+			Reputation::gain( $this->owner, config( 'council.reputation.reply_favorited' ) );
 
 			$this->favorites()->create( $attributes );
 		};
@@ -45,7 +45,7 @@ trait Favoritable
 	{
 		$attributes = [ 'user_id' => auth()->id() ];
 
-		Reputation::lose( auth()->user(), config( 'council.reputation.reply_favorited' ) );
+		Reputation::lose( $this->owner, config( 'council.reputation.reply_favorited' ) );
 
 		$this->favorites()->where( $attributes )->get()->each->delete();
 	}

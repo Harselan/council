@@ -80,39 +80,59 @@ class ReputationTest extends TestCase
 	/** @test */
 	function a_user_earns_points_when_their_reply_is_favorited()
 	{
-		$this->signIn();
+		// Given we have a signed in user, John.
+		$this->signIn( $john = create( 'App\User' ) );
 
-		$thread = create('App\Thread');
+		// And also Jane...
+		$jane = create( 'App\User' );
 
-		$reply = $thread->addReply([
-			'user_id'   => auth()->id(),
+		// If Jane adds a new reply to a thread...
+		$reply = create('App\Thread')->addReply([
+			'user_id'   => $jane->id,
 			'body'      => 'Here is a reply.'
 		]);
 
+		// And John favorites that reply
 		$this->post( route( 'replies.favorite', $reply ) );
 
-		$total = config('council.reputation.reply_posted') + config( 'council.reputation.reply_favorited' );
+		// Then Jane's reputation should grow, accordingly.
+		$this->assertEquals(
+			config('council.reputation.reply_posted') + config( 'council.reputation.reply_favorited' ),
+			$jane->fresh()->reputation
+		);
 
-		$this->assertEquals( $total, $reply->owner->fresh()->reputation );
+		// While John's reputation remain unaffected.
+		$this->assertEquals( 0, $john->fresh()->reputation );
 	}
 
 	/** @test */
 	function a_user_looses_points_when_their_favorited_reply_is_unfavorited()
 	{
-		$this->signIn();
+		// Given we have a signed in user, John.
+		$this->signIn( $john = create( 'App\User' ) );
 
-		$reply = create( 'App\Reply', [ 'user_id' => auth()->id() ] );
+		// And also Jane...
+		$jane  = create( 'App\User' );
 
+		// If Jane adds a new reply to a thread...
+		$reply = create( 'App\Reply', [ 'user_id' => $jane->id ] );
+
+		// And John favorites that reply
 		$this->post( route( 'replies.favorite', $reply ) );
 
-		$total = config('council.reputation.reply_posted') + config( 'council.reputation.reply_favorited' );
+		// Then Jane's reputation should grow, accordingly.
+		$this->assertEquals(
+			config('council.reputation.reply_posted') + config( 'council.reputation.reply_favorited' ),
+			$jane->fresh()->reputation
+		);
 
-		$this->assertEquals( $total, $reply->owner->fresh()->reputation );
-
+		// But, if John unfavorites that reply...
 		$this->post( route( 'replies.favorite', $reply ) );
 
-		$total = config('council.reputation.reply_posted') + config( 'council.reputation.reply_favorited' ) - config( 'council.reputation.reply_favorited' );
+		// Then Jane's reputation should be reduced, accordingly.
+		$this->assertEquals( config( 'council.reputation.reply_posted' ), $jane->fresh()->reputation );
 
-		$this->assertEquals( $total, $reply->owner->fresh()->reputation );
+		// While John's reputation remain unaffected.
+		$this->assertEquals( 0, $john->fresh()->reputation );
 	}
 }
